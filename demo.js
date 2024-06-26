@@ -1,6 +1,6 @@
 function startConnect(){
 
-    clientID = "clientID - "+parseInt(Math.random() * 100);
+    clientID = "clientID - "+parseInt(Math.random() * 10000);
 
     host = document.getElementById("host").value;   
     port = document.getElementById("port").value;  
@@ -11,7 +11,6 @@ function startConnect(){
     document.getElementById("messages").innerHTML += "<span> Using the client Id " + clientID +" </span><br>";
 
     client = new Paho.MQTT.Client("wss://" + host + ":" + port+ "/mqtt", clientID);
-    // client = new Paho.MQTT.Client(host, Number(port), clientID);
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
 
@@ -30,6 +29,7 @@ function onConnect(){
     document.getElementById("messages").innerHTML += "<span> Subscribing to topic "+topic + "</span><br>";
 
     client.subscribe(topic);
+
 }
 
 
@@ -62,4 +62,39 @@ Message.destinationName = topic;
 client.send(Message);
 document.getElementById("messages").innerHTML += "<span> Message to topic "+topic+": " + msg + "</span><br>";
 
+}
+function turnOnLed() {
+    msg = "HIGH";
+    topic = "web/control";
+
+    Message = new Paho.MQTT.Message(msg);
+    Message.destinationName = topic;
+
+    client.send(Message);
+    document.getElementById("messages").innerHTML += "<span> TURN ON LED" + "</span><br>";
+
+}
+
+function turnOffLed() {
+    msg = "LOW";
+    topic = "web/control";
+
+    Message = new Paho.MQTT.Message(msg);
+    Message.destinationName = topic;
+
+    client.send(Message);
+    document.getElementById("messages").innerHTML += "<span> TURN OFF LED" + "</span><br>";
+
+}
+
+function isClientConnected() {
+    return client.isConnected();
+}
+
+function validateForm() {
+    if (!isClientConnected()) {
+        alert("Client is not connected !.");
+        return false;
+    }
+    else return true;
 }
