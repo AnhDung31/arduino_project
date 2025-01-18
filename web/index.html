@@ -1,37 +1,76 @@
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IOT PROJECT</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js" type="text/javascript"></script>
-    <script src="demo.js" type="text/javascript"></script>
- </head>
-   <body>
-      <div class="wrapper">
-         <h1 id="Main_heading"> <b>IOT PROJECT</b></h1><br><br>
-         <form id="connection-information-form">
-            <b>Hostname or IP Address and Port Number:</b> 
-            <input id="host" type="text" name="host" placeholder="broker address">
-             
-            <input id="port" type="text" name="port" title="port" placeholder="port"><br>
-            <b>Username and Password:</b>
-            <input id="username" type="text" name="Username" placeholder="Username"><br>
-            
-            <input id="password" type="password" name="password" placeholder="password"><br>
-            <b>Subscription topic:</b>
-            <input id="topic_s" type="text" name="topic_s" placeholder="topic_s"><br><br>
-            <input type="button" onclick="startConnect()"  value="Connect">
-            <input type="button"  onclick="startDisconnect()" value="Disconnect"> <br>
-            <br><b>Publish Topic and Message:</b>
-            <input id="topic_p" type="text" name="topic_p" placeholder="Publish topic">
-             
-            <input id="Message" type="text" name="message"  placeholder="Message">
-            <input type="button" onclick="publishMessage()" value="Publish"> <br>
-            <b>Turn on/ turn off led:</b> <br>
-            <input type="button" onclick="turnOnLed()" value="Turn on"> <br>
-            <input type="button" onclick="turnOffLed()" value="Turn off">
-         </form>
-         <div id="messages"></div>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>IOT PROJECT</title>
+   <link rel="stylesheet" href="style.css">
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js" type="text/javascript"></script>
+</head>
+<body>
+   <div class="container">
+       <div class="wrapper">
+           <form id="connection-information-form">
+               <div>
+                   <b>Hostname or IP Address and Port Number:</b>
+                   <div style="display: flex; flex-direction: row;">
+                       <input id="host" type="text" name="host" placeholder="broker address">
+                       <input id="port" type="text" name="port" title="port" placeholder="port">
+                   </div>
+               </div>
+               <div>
+                   <b>Username and Password:</b>
+                   <div style="display: flex; flex-direction: row;">
+                       <input id="username" type="text" name="Username" placeholder="Username">
+                       <input id="password" type="password" name="password" placeholder="password">
+                   </div>
+               </div>
+               <div>
+                   <b>Subscription topic:</b>
+                   <div style="display: flex; flex-direction: row;">
+                       <input id="topic_s" type="text" name="topic_s" placeholder="topic_s">
+                   </div>
+               </div>
+               <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                   <input type="button" onclick="startConnect()" value="Connect">
+                   <input type="button" onclick="startDisconnect()" value="Disconnect">
+               </div>
+               <b>Publish Topic and Message:</b>
+               <div style="display: flex; flex-direction: row;">
+                   <input id="topic_p" type="text" name="topic_p" placeholder="Publish topic">
+                   <input id="Message" type="text" name="message" placeholder="Message">
+               </div>
+               <input type="button" onclick="publishMessage()" value="Publish" style="margin:auto">
+               <b>Turn on/ turn off led:</b>
+               <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                  <input type="button" onclick="turnOnLed()" value="Turn on">
+                   <input type="button" onclick="turnOffLed()" value="Turn off">
+               </div>
+           </form>
+       </div>
+
+       <!-- Messages and Chart -->
+       <div class="messages-and-charts">
+           <div id="messages"></div>
+
+          
+       </div>
+   </div>
+   <div class="chartcontainer">
+      <div style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 10px;">
+          <p style="padding: 5px ; background-color: white;     border-radius: 10px;">
+              Nhiệt độ: <span id="realtimenhietdo"></span>
+          </p>
+          <p style="padding: 5px ; background-color: white;     border-radius: 10px;">
+              Độ ẩm: <span id="realtimedoam"></span>
+          </p>
       </div>
-  
-   </body>
+
+      <div class="chartdiv ">
+          <canvas id="lineChart" class="chartc" style="width: 100%; height: 30%"></canvas>
+      </div>
+      <div class="chartdiv">
+          <canvas id="lineChart1" class="chartc" style="width: 100%; height: 30%"></canvas>
+      </div>
+  </div>
+   <script src="demo.js" type="text/javascript"></script>
+</body>
